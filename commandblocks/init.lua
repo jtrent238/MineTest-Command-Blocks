@@ -2,6 +2,7 @@
 
 -- Definitions made by this mod that other mods can use too
 commandblockmod = {}
+commandblockmod.modname = minetest.get_current_modname()
 
 -- Load other files
 --dofile(minetest.get_modpath("commandblocks").."/functions.lua")
