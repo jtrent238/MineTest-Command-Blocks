@@ -90,8 +90,4 @@ on_construct = function(pos)
 		--	)
 		--end
 	end
-	--minetest.register_on_player_receive_fields = (function(player, "command_block_formspec", {button_done})
-	--	meta:set_string("command_input", command_input)
-	--	meta:set_string("command_output", command_output)
-	--end
 })
