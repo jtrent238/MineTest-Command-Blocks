@@ -5,7 +5,7 @@ commandblockmod = {}
 commandblockmod.modname = minetest.get_current_modname()
 
 -- Load other files
---dofile(minetest.get_modpath("commandblocks").."/functions.lua")
+--dofile(minetest.get_modpath("commandblockmod").."/datastorage.lua")
 
 local command_block_formspec = "size[8,3]"..
 	"textarea[0,0;10,1;command_input;command_input;]"..
@@ -13,6 +13,7 @@ local command_block_formspec = "size[8,3]"..
 	"button[0,2;3,1;button_done;button_done]"..
 	"button_exit[5,2;3,1;button_cancel;button_cancel]"
 local elements = {"command_input", "command_output", "button_cancel", "button_done"}
+--local data = datastorage.get(id, ...)
 
 -- Set a noticeable inventory formspec for players
 minetest.register_on_joinplayer(function(player)
@@ -22,7 +23,7 @@ minetest.register_on_joinplayer(function(player)
 	minetest.after(2.0, cb, player)
 end)
 
-minetest.register_node("commandblocks:BlockCommandBlock", {
+minetest.register_node("commandblockmod:BlockCommandBlock", {
 	description = "Command Block",
 	tiles = {"BlockCommandBlock.png"},
 	paramtype2 = "facedir",
@@ -39,30 +40,6 @@ on_construct = function(pos)
 		for _, element in pairs(elements) do
 			inv:set_size("armor_"..element, 1)
 		end
-	end,
-	can_dig = function(pos, player)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		for _, element in pairs(elements) do
-			if not inv:is_empty("armor_"..element) then
-				return false
-			end
-		end
-		return true
-	end,
-	after_place_node = function(pos)
-		minetest.add_entity(pos, "3d_armor_stand:armor_entity")
-	end,
-	allow_metadata_inventory_put = function(pos, listname, index, stack)
-		local def = stack:get_definition() or {}
-		local groups = def.groups or {}
-		if groups[listname] then
-			return 1
-		end
-		return 0
-	end,
-	allow_metadata_inventory_move = function(pos)
-		return 0
 	end,
 	on_blast = function(pos)
 		local object = get_stand_object(pos)
@@ -84,3 +61,7 @@ on_construct = function(pos)
 		--end
 	end
 })
+
+minetest.save = function()
+	datastorage.save(command_input)
+	end
