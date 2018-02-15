@@ -1,15 +1,7 @@
--- default (Minetest 0.4 mod)
--- Most default stuff
-
--- The API documentation in here was moved into doc/lua_api.txt
-
-WATER_ALPHA = 160
-WATER_VISC = 1
-LAVA_VISC = 7
-LIGHT_MAX = 14
+-- commandblockmod (commandblock 1.0.0.0 mod)
 
 -- Definitions made by this mod that other mods can use too
-default = {}
+commandblockmod = {}
 
 -- Load other files
 --dofile(minetest.get_modpath("commandblocks").."/functions.lua")
